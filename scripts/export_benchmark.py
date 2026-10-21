@@ -1,7 +1,7 @@
 """Export the chosen model to ONNX and TensorRT (FP16) and measure what each costs and keeps:
 latency per image on this GPU and mAP50 on the combined test set.
 
-usage: uv run scripts/export_benchmark.py rtdetr_all
+usage: uv run --group export scripts/export_benchmark.py rtdetr_all
 """
 import argparse
 import json
@@ -34,7 +34,8 @@ def main(args):
     images = sorted(Path("data/yolo/Japan/test/images").glob("*.jpg"))[: args.n]
     variants = {"pytorch_fp32": best}
     variants["onnx_fp32"] = Path(load(best, rtdetr).export(format="onnx", imgsz=args.imgsz, dynamic=False))
-    variants["tensorrt_fp16"] = Path(load(best, rtdetr).export(format="engine", imgsz=args.imgsz, half=True))
+    variants["tensorrt_fp16"] = Path(load(best, rtdetr).export(format="engine", imgsz=args.imgsz, half=True,
+                                                                     workspace=args.workspace))
     out = {}
     for name, path in variants.items():
         model = load(path, rtdetr)
@@ -53,4 +54,6 @@ if __name__ == "__main__":
     parser.add_argument("--n", type=int, default=200)
     parser.add_argument("--imgsz", type=int, default=640)
     parser.add_argument("--out", type=Path, default=Path("results/serving"))
+    # GB for TensorRT's builder; small, because the same GPU drives the desktop
+    parser.add_argument("--workspace", type=float, default=2)
     main(parser.parse_args())
