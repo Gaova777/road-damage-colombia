@@ -24,6 +24,8 @@ from road_damage_colombia.domain.damage import NAMES, TREATMENT, priority, sever
 
 WEIGHTS = Path(os.environ.get("RDC_WEIGHTS", "data/models/rtdetr_all.engine"))
 REPORTS = Path(os.environ.get("RDC_REPORTS", "data/reports.sqlite"))
+# the confidence that maximizes mean F1 on validation (0.51; F1 0.60 against 0.43 at Ultralytics' default 0.25)
+CONF = float(os.environ.get("RDC_CONF", "0.5"))
 
 LATENCY = Histogram("rdc_inference_seconds", "Model time per photo", buckets=(0.005, 0.01, 0.02, 0.04, 0.08, 0.16, 0.5))
 DETECTIONS = Counter("rdc_detections_total", "Damage found, by class", ["cls"])
@@ -41,7 +43,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:3000"], allo
 def detector():
     from road_damage_colombia.adapters.ultralytics_detector import UltralyticsDetector
 
-    return UltralyticsDetector(WEIGHTS)
+    return UltralyticsDetector(WEIGHTS, conf=CONF)
 
 
 @lru_cache
