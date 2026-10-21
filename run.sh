@@ -14,7 +14,8 @@ case "${1:-help}" in
                  && cp runs/rtdetr_all/weights/best.engine data/models/rtdetr_all.engine \
                  && cp runs/rtdetr_all/weights/best.onnx data/models/rtdetr_all.onnx ;;
   gate)        uv run --group mlops scripts/quality_gate.py --register ;;
-  api)         uv run --group export uvicorn road_damage_colombia.entrypoints.api:app --port 8000 ;;
+  # 0.0.0.0 so the Prometheus container can scrape it through the Docker bridge; RDC_HOST=127.0.0.1 to keep it local
+  api)         uv run --group export uvicorn road_damage_colombia.entrypoints.api:app --host "${RDC_HOST:-0.0.0.0}" --port 8000 ;;
   web)         cd web && PATH=$HOME/.local/opt/node/bin:$PATH npm run dev ;;
   monitoring)  docker compose -f monitoring/docker-compose.yml up -d
                echo "Grafana on http://localhost:3001, Prometheus on http://localhost:9090" ;;
