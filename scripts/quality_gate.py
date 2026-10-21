@@ -52,8 +52,13 @@ def main(args):
         mlflow.set_tag("gate", "failed" if failures else "passed")
         if args.register and not failures:
             mlflow.log_artifact(str(args.weights), artifact_path="model")
-            run = mlflow.active_run().info.run_id
-            mlflow.register_model(f"runs:/{run}/model", "road-damage-detector")
+            run = mlflow.active_run().info
+            # the weights are a plain file, not an MLflow-flavoured model, so the version points at the artifact
+            client = mlflow.MlflowClient()
+            if not client.search_registered_models(filter_string="name = 'road-damage-detector'"):
+                client.create_registered_model("road-damage-detector")
+            version = client.create_model_version("road-damage-detector", f"{run.artifact_uri}/model", run.run_id)
+            print(f"  registered road-damage-detector version {version.version}")
     for k, v in metrics.items():
         print(f"  {k:22} {v:.3f}")
     if failures:

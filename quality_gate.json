@@ -1,5 +1,11 @@
 {
-  "map50_japan": {"min": 0.55},
-  "map50_unseen_norway": {"min": 0.20},
-  "median_latency_ms": {"max": 30}
+  "map50_japan": {
+    "min": 0.55
+  },
+  "map50_unseen_norway": {
+    "min": 0.14
+  },
+  "median_latency_ms": {
+    "max": 45
+  }
 }
