@@ -14,3 +14,7 @@ web/.next/
 .env
 *.engine
 *.onnx
+*.pt
+weights/
+*.onnx
+*.engine
