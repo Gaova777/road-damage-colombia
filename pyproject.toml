@@ -1,0 +1,31 @@
+[project]
+name = "road-damage-colombia"
+version = "0.1.0"
+description = "Real-time road damage detection (RT-DETR vs YOLO) across countries, turned into repair priorities, served and monitored"
+readme = "README.md"
+authors = [
+    { name = "Juan Diego", email = "gaova777@utp.edu.co" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.156.4",
+    "pillow>=13.0.0",
+    "prometheus-client>=0.26.0",
+    "python-multipart>=0.0.32",
+    "ultralytics>=8.4.183",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.28,<0.12.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 120
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+    "ruff>=0.17.1",
+]

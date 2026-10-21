@@ -1,0 +1,16 @@
+__pycache__/
+.venv/
+.pytest_cache/
+.ruff_cache/
+data/raw/
+data/yolo/
+data/models/
+data/logs/
+runs/
+mlruns/
+mlflow.db
+web/node_modules/
+web/.next/
+.env
+*.engine
+*.onnx
