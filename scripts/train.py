@@ -10,6 +10,11 @@ from ultralytics import RTDETR, YOLO
 
 
 def main(args):
+    if args.vram < 1:
+        import torch
+
+        # the same GPU drives the desktop: a full card freezes the screen, so leave room for it
+        torch.cuda.set_per_process_memory_fraction(args.vram)
     model = RTDETR(args.model) if "rtdetr" in args.model else YOLO(args.model)
     model.train(data=str(Path("data/yolo") / f"{args.data}.yaml"), epochs=args.epochs, imgsz=args.imgsz,
                 batch=args.batch, workers=8, seed=0, project=str(Path("runs").resolve()), name=args.name,
@@ -26,4 +31,5 @@ if __name__ == "__main__":
     parser.add_argument("--imgsz", type=int, default=640)
     parser.add_argument("--batch", type=int, default=8)
     parser.add_argument("--patience", type=int, default=10)
+    parser.add_argument("--vram", type=float, default=0.8, help="max share of GPU memory for this process")
     main(parser.parse_args())
