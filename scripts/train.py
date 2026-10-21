@@ -12,7 +12,8 @@ from ultralytics import RTDETR, YOLO
 def main(args):
     model = RTDETR(args.model) if "rtdetr" in args.model else YOLO(args.model)
     model.train(data=str(Path("data/yolo") / f"{args.data}.yaml"), epochs=args.epochs, imgsz=args.imgsz,
-                batch=args.batch, workers=8, seed=0, project="runs", name=args.name, exist_ok=True,
+                batch=args.batch, workers=8, seed=0, project=str(Path("runs").resolve()), name=args.name,
+                exist_ok=True,
                 patience=args.patience, plots=True, amp=True)
 
 

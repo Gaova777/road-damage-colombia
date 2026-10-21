@@ -22,7 +22,7 @@ def main(args):
         model = RTDETR(str(weights)) if name.startswith("rtdetr") else YOLO(str(weights))
         for country in COUNTRIES:
             m = model.val(data=str(Path("data/yolo") / f"test_{country}.yaml"), split="val", imgsz=args.imgsz,
-                          batch=16, plots=False, verbose=False, project="runs/eval", name=f"{name}_{country}",
+                          batch=16, plots=False, verbose=False, project=str(Path("runs/eval").resolve()), name=f"{name}_{country}",
                           exist_ok=True)
             ap50 = dict(zip(CLASSES, (round(float(x), 4) for x in m.box.ap50)))
             row = {"model": name, "country": country, "map50": round(float(m.box.map50), 4),

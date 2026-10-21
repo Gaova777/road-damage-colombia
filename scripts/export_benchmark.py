@@ -39,7 +39,7 @@ def main(args):
     for name, path in variants.items():
         model = load(path, rtdetr)
         m = model.val(data="data/yolo/test_Japan.yaml", split="val", imgsz=args.imgsz, batch=1, plots=False,
-                      verbose=False, project="runs/eval", name=f"export_{name}", exist_ok=True)
+                      verbose=False, project=str(Path("runs/eval").resolve()), name=f"export_{name}", exist_ok=True)
         out[name] = {"map50_japan_test": round(float(m.box.map50), 4), "size_mb": round(path.stat().st_size / 1e6, 1),
                      **latency(model, images, args.imgsz)}
         print(name, out[name], flush=True)

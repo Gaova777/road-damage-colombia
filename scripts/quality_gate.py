@@ -32,7 +32,7 @@ def main(args):
     metrics = {}
     for key, country in (("map50_japan", "Japan"), ("map50_unseen_norway", "Norway")):
         m = model.val(data=f"data/yolo/test_{country}.yaml", split="val", imgsz=640, batch=16, plots=False,
-                      verbose=False, project="runs/eval", name=f"gate_{country}", exist_ok=True)
+                      verbose=False, project=str(Path("runs/eval").resolve()), name=f"gate_{country}", exist_ok=True)
         metrics[key] = float(m.box.map50)
     images = sorted(Path("data/yolo/Japan/test/images").glob("*.jpg"))[:60]
     times = []
