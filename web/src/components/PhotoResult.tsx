@@ -13,7 +13,7 @@ export default function PhotoResult({ src, result }: { src: string; result: Resu
             const [x1, y1, x2, y2] = d.box
             return (
               <rect key={i} x={x1} y={y1} width={x2 - x1} height={y2 - y1} fill="none"
-                stroke={CLASS_COLOR[d.cls]} strokeWidth={0.006} vectorEffect="non-scaling-stroke" />
+                stroke={CLASS_COLOR[d.cls]} strokeWidth={3} vectorEffect="non-scaling-stroke" />
             )
           })}
         </svg>
