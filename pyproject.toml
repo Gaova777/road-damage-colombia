@@ -33,7 +33,7 @@ export = [
     "onnx>=1.23.2",
     "onnxruntime-gpu>=1.31.0",
     "onnxslim>=0.1.98",
-    "tensorrt-cu13>=11.4.0.106",
+    "tensorrt-cu13>=10,<11",
 ]
 mlops = [
     "mlflow>=3.17.2",
