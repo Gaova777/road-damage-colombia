@@ -1,0 +1,23 @@
+{
+ "pytorch_fp32": {
+  "map50_japan_test": 0.5023,
+  "size_mb": 40.5,
+  "median_ms": 21.24,
+  "p95_ms": 23.42,
+  "fps": 47.1
+ },
+ "onnx_fp32": {
+  "map50_japan_test": 0.4821,
+  "size_mb": 80.4,
+  "median_ms": 17.08,
+  "p95_ms": 20.17,
+  "fps": 58.5
+ },
+ "tensorrt_fp16": {
+  "map50_japan_test": 0.4829,
+  "size_mb": 43.8,
+  "median_ms": 7.97,
+  "p95_ms": 9.62,
+  "fps": 125.5
+ }
+}
