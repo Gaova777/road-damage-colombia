@@ -18,3 +18,4 @@ web/.next/
 weights/
 *.onnx
 *.engine
+data/*.sqlite
